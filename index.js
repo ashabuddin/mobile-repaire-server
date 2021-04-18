@@ -35,12 +35,29 @@ client.connect(err => {
       res.send(result.insertedCount > 0)
     })
   })
+
+  app.get('/mobile',(req,res) => {
+    mobileCollection.find()
+    .toArray((err, mobile) => {
+      res.send(mobile)
+    })
+  })
+
   app.post('/addReview', (req,res) => {
     const review = req.body
     console.log(review);
     reviewCollection.insertOne(review)
     .then(result => {
       res.send(result.insertedCount > 0)
+    })
+  })
+
+  
+
+  app.get('/reviews',(req,res) => {
+    reviewCollection.find()
+    .toArray((err, reviews) => {
+      res.send(reviews)
     })
   })
 
@@ -53,12 +70,7 @@ client.connect(err => {
     })
   })
 
-  app.get('/reviews',(req,res) => {
-    reviewCollection.find()
-    .toArray((err, reviews) => {
-      res.send(reviews)
-    })
-  })
+  
 
   app.get('/books',(req,res) => {
     addBookCollection.find()
