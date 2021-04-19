@@ -37,7 +37,16 @@ client.connect(err => {
   })
 
   app.get('/mobile',(req,res) => {
+    
     mobileCollection.find()
+    .toArray((err, mobile) => {
+      res.send(mobile)
+    })
+  })
+
+  app.get('/user',(req,res) => {
+    
+    mobileCollection.find({email: req.query.email})
     .toArray((err, mobile) => {
       res.send(mobile)
     })
@@ -78,6 +87,15 @@ client.connect(err => {
       res.send(books)
     })
   })
+
+  app.post('/isAdmin', (req, res) => {
+    const email = req.body.email;
+    addBookCollection.find({ email: email })
+        .toArray((err, admin) => {
+            res.send(admin.length > 0);
+        })
+})
+
   
   
 });
